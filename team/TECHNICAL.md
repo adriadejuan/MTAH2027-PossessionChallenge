@@ -1,6 +1,6 @@
 # Ball possession from automatic tracking: technical note
 
-*Team: <team_name>. Draft, to be finished before submission.*
+*Team: LA MAS.IA.*
 
 ## Approach
 
@@ -20,7 +20,7 @@ share of time with the ball in play.
 | tactical ATD | yes | ball and player positions and speeds; the only per-frame input |
 | Smart Tagging | yes, set pieces only | restart markers, and the restarting team when tagged |
 | homography | no | the ATD is already in pitch coordinates |
-| tactical / broadcast video | no | TODO: say whether anyone tried it |
+| tactical / broadcast video | no | not used; the tracking already encodes what we needed |
 | broadcast ATD | no | not synchronised to the tactical timeline |
 
 ## Possession rules
@@ -69,8 +69,13 @@ full-match plausibility checks, never for its public score alone.
 - In the second half, set pieces are still labelled dead shortly after their tagged window more
   often than in the first (44% vs 19% of them), mostly from the ball-missing rule.
 - Throw-ins carry no team in the tagging, so the team after a throw-in comes from the first touch.
-- TODO: what we would do with more time (pass/touch detection from ball velocity changes;
-  using the video where the ball is missing).
+
+With more time we would (1) detect passes and touches from sudden changes in the ball's speed
+and direction, to date possession changes more precisely and keep short possessions; (2) use the
+tactical video to recover the ball where the tracking loses it, which drives most of our
+stoppage errors; and (3) replace the hand-set thresholds with a small hidden Markov model over
+{H, A, D} whose switch penalties come from football reasoning rather than from the 5 public
+minutes.
 
 ## Reproduction
 
